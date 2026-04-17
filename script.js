@@ -113,6 +113,7 @@ const roleCard = document.getElementById('roleCard');
 const manipCard = document.getElementById('manipCard');
 
 let currentTheme = THEMES_LIST[2];
+let isDropdownOpen = false;
 
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -153,35 +154,69 @@ function buildDropdown() {
             e.stopPropagation();
             setExactTheme(theme);
         });
+        // Добавляем touch-обработчик для мобилок
+        div.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+        }, { passive: false });
         dropdown.appendChild(div);
     });
 }
 
-function closeDropdown() {
-    dropdown.classList.remove('show');
+function openDropdown() {
+    dropdown.classList.add('show');
+    isDropdownOpen = true;
 }
 
-// ========== ОБРАБОТЧИКИ (ИСПРАВЛЕННЫЕ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ) ==========
+function closeDropdown() {
+    dropdown.classList.remove('show');
+    isDropdownOpen = false;
+}
 
-// Клик по карте темы (не по стрелке и не по списку) — случайная тема
+function toggleDropdown() {
+    if (isDropdownOpen) {
+        closeDropdown();
+    } else {
+        openDropdown();
+    }
+}
+
+// ========== ОБРАБОТЧИКИ ==========
+
+// Стрелка — открыть/закрыть список
+themeArrow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleDropdown();
+});
+
+// Для мобилок — отдельный touch-обработчик на стрелку
+themeArrow.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleDropdown();
+}, { passive: false });
+
+// Клик по карте темы (не по стрелке) — случайная тема
 themeCardDiv.addEventListener('click', (e) => {
-    // Если кликнули на стрелку — ничего не делаем (стрелка обрабатывает сама)
     if (e.target === themeArrow || themeArrow.contains(e.target)) {
         return;
     }
-    // Если кликнули внутри выпадающего списка — не меняем тему
     if (dropdown.contains(e.target)) {
         return;
     }
     setRandomTheme();
 });
 
-// Стрелка — открыть/закрыть список (с поддержкой touch)
-themeArrow.addEventListener('click', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    dropdown.classList.toggle('show');
-});
+// Для мобилок — touch-обработчик карты темы
+themeCardDiv.addEventListener('touchstart', (e) => {
+    if (e.target === themeArrow || themeArrow.contains(e.target)) {
+        return;
+    }
+    if (dropdown.contains(e.target)) {
+        return;
+    }
+    setRandomTheme();
+}, { passive: false });
 
 // Закрытие списка при клике вне карточки
 document.addEventListener('click', (e) => {
@@ -190,15 +225,26 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Закрытие по кнопке Escape (для клавиатуры)
+// Для мобилок — закрытие по touch вне карточки
+document.addEventListener('touchstart', (e) => {
+    if (!themeCardDiv.contains(e.target)) {
+        closeDropdown();
+    }
+}, { passive: false });
+
+// Закрытие по кнопке Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeDropdown();
     }
 });
 
-// Предотвращаем закрытие списка при скролле на мобильных устройствах
+// Разрешаем скролл внутри выпадающего списка — НЕ закрываем его
 dropdown.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+}, { passive: false });
+
+dropdown.addEventListener('scroll', (e) => {
     e.stopPropagation();
 });
 
@@ -209,6 +255,14 @@ roleCard.addEventListener('click', () => {
     roleDescEl.innerText = newRole.desc;
 });
 
+// Touch для роли
+roleCard.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const newRole = randomItem(ROLES_LIST);
+    roleTitleEl.innerText = newRole.name;
+    roleDescEl.innerText = newRole.desc;
+}, { passive: false });
+
 // Клик по карте манипуляции
 manipCard.addEventListener('click', () => {
     const newManip = randomItem(MANIPULATIONS_LIST);
@@ -216,10 +270,23 @@ manipCard.addEventListener('click', () => {
     manipDescEl.innerText = newManip.desc;
 });
 
-// Кнопка обновления обеих карт
+// Touch для манипуляции
+manipCard.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const newManip = randomItem(MANIPULATIONS_LIST);
+    manipTitleEl.innerText = newManip.name;
+    manipDescEl.innerText = newManip.desc;
+}, { passive: false });
+
+// Кнопка обновления
 refreshBtn.addEventListener('click', () => {
     refreshRolesAndManips();
 });
+
+refreshBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    refreshRolesAndManips();
+}, { passive: false });
 
 // ========== ПРАВИЛА ==========
 const rulesOverlay = document.getElementById('rulesOverlay');
@@ -235,6 +302,10 @@ function hideRules() {
 
 if (rulesCloseBtn) {
     rulesCloseBtn.addEventListener('click', hideRules);
+    rulesCloseBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        hideRules();
+    }, { passive: false });
 }
 
 if (rulesOverlay) {
@@ -243,6 +314,11 @@ if (rulesOverlay) {
             hideRules();
         }
     });
+    rulesOverlay.addEventListener('touchstart', (e) => {
+        if (e.target === rulesOverlay) {
+            hideRules();
+        }
+    }, { passive: false });
 }
 
 // ========== ИНИЦИАЛИЗАЦИЯ ==========
