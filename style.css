@@ -43,7 +43,7 @@ body {
 .game-header h1 {
     font-size: clamp(1.4rem, 6vw, 1.8rem);
     font-weight: 800;
-    color: #FF6B00;
+    color: #FF3801;
     letter-spacing: -0.5px;
     margin-bottom: 4px;
     white-space: nowrap;
@@ -51,7 +51,7 @@ body {
 
 .game-header p {
     font-size: clamp(0.65rem, 2.5vw, 0.75rem);
-    color: #0a5c8e;
+    color: #024E80;
     font-weight: 500;
     white-space: nowrap;
 }
@@ -79,15 +79,15 @@ body {
 /* фиксированная высота карт через flex */
 .theme-card {
     background: white;
-    border: 2px solid #FF6B00;
-    color: #FF6B00;
+    border: 2px solid #FF3801;
+    color: #FF3801;
     margin-bottom: 12px;
     flex: 1;
     min-height: 0;
 }
 
 .role-card {
-    background: #0a5c8e;
+    background: #024E80;
     color: white;
     margin-bottom: 12px;
     flex: 1;
@@ -95,7 +95,7 @@ body {
 }
 
 .manip-card {
-    background: #FF6B00;
+    background: #FF3801;
     color: white;
     margin-bottom: 12px;
     flex: 1;
@@ -108,7 +108,7 @@ body {
     letter-spacing: 1px;
     text-transform: uppercase;
     margin-bottom: 6px;
-    color: #FF6B00;
+    color: #FF3801;
 }
 
 .theme-text {
@@ -128,7 +128,7 @@ body {
     right: 14px;
     font-size: 18px;
     font-weight: bold;
-    color: #FF6B00;
+    color: #FF3801;
     cursor: pointer;
     background: white;
     width: 28px;
@@ -151,7 +151,7 @@ body {
     top: 45px;
     right: 10px;
     background: white;
-    border: 2px solid #FF6B00;
+    border: 2px solid #FF3801;
     border-radius: 12px;
     width: 250px;
     max-height: 200px;
@@ -236,13 +236,13 @@ body {
 /* кнопка обновления */
 .refresh-btn {
     background: white;
-    border: 2px solid #FF6B00;
+    border: 2px solid #FF3801;
     width: 100%;
     padding: 12px;
     border-radius: 12px;
     font-weight: 800;
     font-size: clamp(0.8rem, 3vw, 0.9rem);
-    color: #FF6B00;
+    color: #FF3801;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -295,7 +295,7 @@ body {
     width: calc(100% - 40px);
     max-width: 500px;
     background: white;
-    border: 2px solid #FF6B00;
+    border: 2px solid #FF3801;
     border-radius: 12px;
     overflow: hidden;
     display: flex;
@@ -312,7 +312,7 @@ body {
 }
 
 .rules-header h2 {
-    color: #FF6B00;
+    color: #FF3801;
     font-size: 1.2rem;
     font-weight: 800;
     margin: 0;
@@ -323,7 +323,7 @@ body {
 .rules-close {
     width: 28px;
     height: 28px;
-    background: #FF6B00;
+    background: #FF3801;
     border-radius: 8px;
     display: flex;
     align-items: center;
