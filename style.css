@@ -121,7 +121,7 @@ body {
     margin: 0 auto;
 }
 
-/* стрелочка в правом верхнем углу (исправлена для мобилок) */
+/* стрелочка в правом верхнем углу */
 .theme-arrow {
     position: absolute;
     top: 12px;
@@ -146,7 +146,7 @@ body {
     transform: scale(0.9);
 }
 
-/* выпадающий список (исправлен для мобилок) */
+/* выпадающий список */
 .dropdown-themes {
     position: absolute;
     top: 55px;
@@ -167,7 +167,7 @@ body {
     display: block;
 }
 
-/* элементы списка с увеличенной областью касания */
+/* элементы списка */
 .dropdown-themes div {
     padding: 12px 16px;
     font-size: 0.85rem;
@@ -178,6 +178,10 @@ body {
     text-align: left;
     min-height: 44px;
     touch-action: manipulation;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 .dropdown-themes div:active {
@@ -274,14 +278,7 @@ body {
     flex-shrink: 0;
 }
 
-/* Разрешаем выделение в выпадающем списке и правилах */
-.dropdown-themes div {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-}
-
+/* Разрешаем выделение в правилах */
 .rules-text {
     -webkit-user-select: text;
     -moz-user-select: text;
