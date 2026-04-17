@@ -146,7 +146,7 @@ body {
     transform: scale(0.9);
 }
 
-/* выпадающий список */
+/* выпадающий список — скролл работает на Android и iOS */
 .dropdown-themes {
     position: absolute;
     top: 55px;
@@ -160,7 +160,10 @@ body {
     z-index: 1000;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     display: none;
+    /* Для Android и iOS скролл */
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 }
 
 .dropdown-themes.show {
@@ -177,7 +180,6 @@ body {
     transition: 0.05s;
     text-align: left;
     min-height: 44px;
-    touch-action: manipulation;
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
@@ -347,7 +349,6 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: 0.1s;
-    touch-action: manipulation;
 }
 
 .rules-close:active {
