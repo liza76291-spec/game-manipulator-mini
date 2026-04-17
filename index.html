@@ -6,7 +6,107 @@
     <title>Манипулятор — игра для компании</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<body><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Манипулятор — игра для компании</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКНО ПРАВИЛ (теперь внутри body) -->
+    <div class="rules-overlay" id="rulesOverlay">
+        <div class="rules-card">
+            <div class="rules-header">
+                <h2>ПРАВИЛА</h2>
+                <div class="rules-close" id="rulesCloseBtn">
+                    <div class="close-icon">✕</div>
+                </div>
+            </div>
+            <div class="rules-scrollable">
+                <div class="rules-section">
+                    <div class="rules-title">ЦЕЛЬ ИГРЫ</div>
+                    <div class="rules-text">
+                        Игра для компании от 4 до 10 человек. Игроки обсуждают заданную тему, используя манипуляции
+                        и пытаясь переубедить остальных придерживаясь своей роли. В конце раунда методом голосования
+                        или один игрок со специальной картой роли принимает финальное решение, и на основе выбора 
+                        распределяются баллы.<br><br>
+
+                        Вы можете играть с баллами (игра становится соревновательной) или без баллов (игра 
+                        превращается в дисскусию с разоблачением манипуляций и переубеждением.)
+
+                    </div>
+                    <div class = "rulex-test">
+                        
+                    </div>
+                </div>
+                <div class="rules-section">
+                    <div class="rules-title">КАК ПОЛЬЗОВАТЬСЯ САЙТОМ</div>
+                    <div class="rules-text">
+                        1. КАРТА ТЕМЫ: нажмите на неё, чтобы выбрать случайную тему. Нажмите на стрелку 
+                        в правом верхнем углу, чтобы открыть список всех тем по алфавиту и выбрать нужную.<br><br>
+                        2. КАРТА РОЛИ: нажмите на синюю карту, чтобы получить новую роль. В роли вам нужно 
+                        отстаивать тему любыми способами.<br><br>
+                        3. КАРТА МАНИПУЛЯЦИИ: нажмите на оранжевую карту, чтобы получить новый приём. 
+                        Вы должны использовать эту конкретную манипуляцию в споре.<br><br>
+                        4. КНОПКА "НОВАЯ РОЛЬ + МАНИПУЛЯЦИЯ": обновляет обе карты сразу.<br><br>
+                        5. ИГРОВОЙ ПРОЦЕСС: выберите тему, назначьте игроку роль и манипуляцию, 
+                        затем начинайте обсуждение. Задача остальных — заметить манипуляцию и указать на неё.
+                    </div>
+                </div>
+                <div class="rules-section">
+                    <div class="rules-title">ПРИМЕР</div>
+                    <div class="rules-text">
+                        Тема: "Смертная казнь — эффективное наказание"<br>
+                        Роль: АГРЕССОР<br>
+                        Манипуляция: ДАВЛЕНИЕ БОЛЬШИНСТВА<br>
+                        Игрок должен агрессивно доказывать тему, используя фразы вроде 
+                        "Все нормальные люди уже поддерживают это!".
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>МАНИПУЛЯТОР</h1>
+            <p>выбери тему · тяни карты · играй с компанией</p>
+        </div>
+
+        <!-- КАРТА ТЕМА (белая, оранжевый контур, стрелка) -->
+        <div class="card theme-card" id="themeCard">
+            <div class="theme-label">ТЕМА ДЛЯ СПОРА</div>
+            <div class="theme-text" id="currentThemeText">Смертная казнь — эффективное наказание</div>
+            <div class="theme-arrow" id="themeArrow">▼</div>
+            <div class="dropdown-themes" id="dropdownList"></div>
+        </div>
+
+        <!-- КАРТА РОЛИ (сплошная синяя) -->
+        <div class="card role-card" id="roleCard">
+            <div class="card-badge">РОЛЬ</div>
+            <div class="card-title" id="roleTitle">Защитник</div>
+            <div class="card-desc" id="roleDesc">Ты отстаиваешь выбранную позицию</div>
+        </div>
+
+        <!-- КАРТА МАНИПУЛЯЦИИ (сплошная оранжевая) -->
+        <div class="card manip-card" id="manipCard">
+            <div class="card-badge">МАНИПУЛЯЦИЯ</div>
+            <div class="card-title" id="manipTitle">Ложная дилемма</div>
+            <div class="card-desc" id="manipDesc">Либо ты согласен, либо ты против всех</div>
+        </div>
+
+        <button class="refresh-btn" id="refreshCardsBtn">НОВАЯ РОЛЬ + МАНИПУЛЯЦИЯ</button>
+        <div class="footer">
+            Нажми на тему → случайная тема | Стрелка → список тем | Карты роли и манипуляции кликабельны
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
     <!-- ВСПЛЫВАЮЩЕЕ ОКНО ПРАВИЛ (теперь внутри body) -->
     <div class="rules-overlay" id="rulesOverlay">
