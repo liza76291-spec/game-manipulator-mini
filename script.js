@@ -9,25 +9,10 @@ const ROLES_LIST = [
     { name: "ЛЖЕЦ", desc: "Вы обязаны врать в дискуссии, искажая факты, вводя игроков в заблуждение." }, 
     { name: "САБОТАЖНИК", desc: "Ваша задача вносить хаос и делать спор максимально запутанным." }, 
     { name: "ЭМОЦИОНАЛ", desc: "Вы должны всех склонять опираться на чувства, а не на логику." },
-    { name: "СОМНЕВАЮЩИЙСЯ", desc: "Ваша задача - нервничать, ошибаться и метаться между позициями." },
-
-
-
-
-    // { name: "АГРЕССОР", desc: "Давишь оппонента напором и громкими фразами." },
-    // { name: "МАНИПУЛЯТОР", desc: "Используешь скрытые уловки, чтобы победить." },
-    // { name: "ЖЕРТВА", desc: "Вызываешь жалость, уходишь от прямых ответов." },
-    // { name: "РАЦИОНАЛ", desc: "Только факты, но можешь искажать цифры." },
-    // { name: "ЦИНИК", desc: "Обесцениваешь любые аргументы сарказмом." },
-    // { name: "МОРАЛИСТ", desc: "Апеллируешь к долгу, совести и стыду." },
-    // { name: "ТАКТИК", desc: "Переводишь стрелки и меняешь тему в нужный момент." },
-    // { name: "ДРУЖЕЛЮБНЫЙ", desc: "Завоевываешь доверие, чтобы управлять." },
-    // { name: "ЭКСПЕРТ", desc: "Ссылаешься на авторитеты и псевдоисследования." },
-    // { name: "ТОРОПЫГА", desc: "Давишь сроками: 'решай быстро'." },
-    // { name: "ПЕРЕВОРАЧИВАТЕЛЬ", desc: "Обвиняешь другого в том, что делаешь сам." }
+    { name: "СОМНЕВАЮЩИЙСЯ", desc: "Ваша задача - нервничать, ошибаться и метаться между позициями." }
 ];
 
-// МАНИПУЛЯЦИИ (20 шт) 
+// МАНИПУЛЯЦИИ (29 шт)
 const MANIPULATIONS_LIST = [
     { name: "ЛОЖНАЯ ДИЛЕММА", desc: "Либо ты согласен, либо ты против всех." },
     { name: "ДАВЛЕНИЕ БОЛЬШИНСТВА", desc: "Все нормальные люди уже выбрали это." },
@@ -172,54 +157,74 @@ function buildDropdown() {
     });
 }
 
-function toggleDropdown() {
-    dropdown.classList.toggle('show');
-}
-
 function closeDropdown() {
     dropdown.classList.remove('show');
 }
 
-// ОБРАБОТЧИКИ
+// ========== ОБРАБОТЧИКИ (ИСПРАВЛЕННЫЕ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ) ==========
+
+// Клик по карте темы (не по стрелке и не по списку) — случайная тема
 themeCardDiv.addEventListener('click', (e) => {
-    if (e.target === themeArrow || themeArrow.contains(e.target) || dropdown.contains(e.target)) {
+    // Если кликнули на стрелку — ничего не делаем (стрелка обрабатывает сама)
+    if (e.target === themeArrow || themeArrow.contains(e.target)) {
+        return;
+    }
+    // Если кликнули внутри выпадающего списка — не меняем тему
+    if (dropdown.contains(e.target)) {
         return;
     }
     setRandomTheme();
 });
 
+// Стрелка — открыть/закрыть список (с поддержкой touch)
 themeArrow.addEventListener('click', (e) => {
     e.stopPropagation();
-    toggleDropdown();
+    e.preventDefault();
+    dropdown.classList.toggle('show');
 });
 
+// Закрытие списка при клике вне карточки
 document.addEventListener('click', (e) => {
     if (!themeCardDiv.contains(e.target)) {
         closeDropdown();
     }
 });
 
+// Закрытие по кнопке Escape (для клавиатуры)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeDropdown();
+    }
+});
+
+// Предотвращаем закрытие списка при скролле на мобильных устройствах
+dropdown.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+});
+
+// Клик по карте роли
 roleCard.addEventListener('click', () => {
     const newRole = randomItem(ROLES_LIST);
     roleTitleEl.innerText = newRole.name;
     roleDescEl.innerText = newRole.desc;
 });
 
+// Клик по карте манипуляции
 manipCard.addEventListener('click', () => {
     const newManip = randomItem(MANIPULATIONS_LIST);
     manipTitleEl.innerText = newManip.name;
     manipDescEl.innerText = newManip.desc;
 });
 
+// Кнопка обновления обеих карт
 refreshBtn.addEventListener('click', () => {
     refreshRolesAndManips();
 });
 
-// ЭЛЕМЕНТЫ ДЛЯ ПРАВИЛ
+// ========== ПРАВИЛА ==========
 const rulesOverlay = document.getElementById('rulesOverlay');
 const rulesCloseBtn = document.getElementById('rulesCloseBtn');
 
-// ФУНКЦИЯ ОТКРЫТИЯ ПРАВИЛ
 function showRules() {
     rulesOverlay.classList.add('show');
 }
@@ -228,12 +233,10 @@ function hideRules() {
     rulesOverlay.classList.remove('show');
 }
 
-// ЗАКРЫТИЕ ПО КРЕСТИКУ
 if (rulesCloseBtn) {
     rulesCloseBtn.addEventListener('click', hideRules);
 }
 
-// ЗАКРЫТИЕ ПРИ КЛИКЕ НА ТЁМНУЮ ОБЛАСТЬ
 if (rulesOverlay) {
     rulesOverlay.addEventListener('click', (e) => {
         if (e.target === rulesOverlay) {
@@ -242,14 +245,13 @@ if (rulesOverlay) {
     });
 }
 
-// ИНИЦИАЛИЗАЦИЯ
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
 function init() {
     buildDropdown();
     updateThemeUI();
     refreshRolesAndManips();
 }
 
-// ПОКАЗАТЬ ПРАВИЛА ПРИ ЗАГРУЗКЕ
 setTimeout(() => {
     showRules();
 }, 200);
